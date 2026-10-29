@@ -1,0 +1,280 @@
+<title>Verdade Jurídica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: uma coluna de estudo, como os autos — o caso em cima, o parecer verificado embaixo, carimbos de estado à margem */
+:root{
+  --bg:#eef1f4; --paper:#ffffff; --ink:#18212e; --muted:#566273; --line:#d3d9e1;
+  --accent:#1f4e79; --accent-soft:#e3ebf4;
+  --ok:#1d6b45; --ok-soft:#e2f1e8; --warn:#8a5a00; --warn-soft:#fbefd6; --bad:#9b2c2c; --bad-soft:#f8e3e1; --info:#3d4f86; --info-soft:#e6e9f6;
+  --display:"Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10151c; --paper:#171e28; --ink:#e4e9f0; --muted:#9aa6b6; --line:#2b3542;
+  --accent:#8fb6e0; --accent-soft:#1d2a3a;
+  --ok:#7fcfa3; --ok-soft:#173025; --warn:#e6bd6a; --warn-soft:#33280f; --bad:#f0a29b; --bad-soft:#3a1c1b; --info:#a9b7ee; --info-soft:#1f2440;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10151c; --paper:#171e28; --ink:#e4e9f0; --muted:#9aa6b6; --line:#2b3542;
+  --accent:#8fb6e0; --accent-soft:#1d2a3a;
+  --ok:#7fcfa3; --ok-soft:#173025; --warn:#e6bd6a; --warn-soft:#33280f; --bad:#f0a29b; --bad-soft:#3a1c1b; --info:#a9b7ee; --info-soft:#1f2440;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:24px 48px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,6vw,38px);line-height:1.15;margin:0;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:62ch}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+h2{font-family:var(--display);font-weight:700;font-size:21px;margin:0;text-wrap:balance}
+h3{font-family:var(--body);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin:0;color:var(--muted)}
+label{font-weight:600;font-size:15px}
+.field{display:flex;flex-direction:column;gap:6px}
+textarea,input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:10px 12px}
+textarea{min-height:220px;resize:vertical;font-size:15px;line-height:1.5}
+textarea:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font-size:13px;color:var(--muted)}
+.tag-example{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:2px 6px;border:1px dashed var(--muted);border-radius:3px;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:inherit;font-weight:700;border-radius:4px;padding:10px 16px;cursor:pointer;border:1px solid var(--accent)}
+.primary{background:var(--accent);color:var(--paper)}
+.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.55;cursor:default}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.check input{margin-top:4px}
+.status{font-size:14px;color:var(--muted);min-height:1.4em}
+.status.err{color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.stamp{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:3px;white-space:nowrap;border:1px solid currentColor}
+.s-PROVADO{color:var(--ok);background:var(--ok-soft)}
+.s-MOSTRADO{color:var(--info);background:var(--info-soft)}
+.s-MENCIONADO{color:var(--warn);background:var(--warn-soft)}
+.s-NAO_SUSTENTADO,.s-NAO_LOCALIZADO{color:var(--bad);background:var(--bad-soft)}
+.s-VERIFICAR{color:var(--warn);background:var(--warn-soft)}
+.section{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
+.section:first-of-type{border-top:0;padding-top:0}
+ul.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+ul.items li{display:flex;flex-direction:column;gap:4px;padding:10px 12px;background:var(--bg);border-radius:4px;min-width:0}
+.item-head{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.quote{font-family:var(--mono);font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.meta{font-size:13px;color:var(--muted)}
+.empty{color:var(--muted);font-size:15px;margin:0}
+.audit{font-family:var(--mono);font-size:12.5px;background:var(--bg);border-radius:4px;padding:10px 12px;overflow-x:auto;white-space:pre-wrap;margin:0}
+.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.hist button{width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-weight:400;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hist time{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.thinking{display:flex;gap:10px;align-items:center;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+@media (prefers-reduced-motion: reduce){.dot{animation:none}}
+footer{font-size:13px;color:var(--muted);text-align:left}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Estudo de casos · método TPL</span>
+    <h1>Verdade Jurídica</h1>
+    <p class="lede">Cole um caso, peça a análise e veja o que está provado no próprio texto, o que é só alegação e o que ainda falta para uma conclusão segura.</p>
+  </header>
+
+  <section class="sheet" aria-labelledby="caso-t">
+    <h2 id="caso-t">O caso</h2>
+    <div class="field">
+      <label for="caso">Texto do caso <span class="tag-example" id="ex-tag">EXEMPLO FICTÍCIO</span></label>
+      <textarea id="caso" spellcheck="true"></textarea>
+      <span class="hint">Inclua os fatos, os documentos citados e o que cada parte alega. Nada é inventado: a análise só usa o que está aqui.</span>
+    </div>
+    <div class="field">
+      <label for="pergunta">Pergunta de estudo</label>
+      <input type="text" id="pergunta">
+    </div>
+    <label class="check" for="enviar"><input type="checkbox" id="enviar" checked> Guardar esta análise para revisão do TPL (só você e o Eduardo veem)</label>
+    <div class="row">
+      <button class="primary" id="btn">Analisar caso</button>
+      <button class="ghost" id="stop" hidden>Parar</button>
+      <button class="ghost" id="limpar">Limpar texto</button>
+    </div>
+    <p class="status" id="status" role="status"></p>
+  </section>
+
+  <section class="sheet" aria-labelledby="res-t" id="resultado">
+    <div class="item-head"><h2 id="res-t">Parecer verificado</h2><span class="meta" id="res-meta"></span></div>
+    <div class="legend" aria-label="Legenda dos estados">
+      <span class="stamp s-PROVADO">Provado</span>
+      <span class="stamp s-MOSTRADO">Mostrado</span>
+      <span class="stamp s-MENCIONADO">Mencionado</span>
+      <span class="stamp s-NAO_SUSTENTADO">Não sustentado</span>
+    </div>
+    <div id="res-body">
+      <p class="empty">Aqui aparecem, nesta ordem: os fatos com o trecho que os comprova, as alegações de cada parte, as hipóteses, as contradições, o que falta nos autos, cada conclusão com seu estado e fundamento, e as normas citadas com a indicação de conferir em fonte oficial.</p>
+    </div>
+  </section>
+
+  <section class="sheet" aria-labelledby="hist-t" id="hist-sec" hidden>
+    <h2 id="hist-t">Análises guardadas</h2>
+    <ul class="hist" id="hist"></ul>
+  </section>
+
+  <footer>
+    <strong>Como ler os estados.</strong> Provado: apoiado por trecho literal do caso, conferido pelo próprio aplicativo. Mostrado: decorre logicamente dos fatos, sem prova direta. Mencionado: só alegado ou de fonte externa ao caso. Não sustentado: o caso contradiz ou não oferece base. O aplicativo confere cada citação no texto; o que não for encontrado é rebaixado automaticamente. Este é um recurso de estudo e não substitui o parecer de um profissional.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var EXEMPLO = "Marina alugou um apartamento de Roberto em março de 2024, com contrato escrito de 30 meses e aluguel mensal de R$ 2.100,00, vencendo todo dia 5.\n\nDocumentos juntados por Marina: o contrato assinado pelos dois; comprovantes de transferência de abril a novembro de 2024, todos pagos até o dia 5; e fotos datadas de 12/09/2024 mostrando infiltração no teto do quarto.\n\nDocumentos juntados por Roberto: uma notificação enviada por e-mail em 02/12/2024 pedindo a desocupação do imóvel em 30 dias.\n\nMarina alega que avisou Roberto sobre a infiltração em setembro, por mensagem de celular, e que ele nunca respondeu. Ela não juntou essa mensagem.\n\nRoberto alega que Marina atrasou os aluguéis de outubro e novembro de 2024 e que por isso pode pedir o imóvel de volta. Ele também alega que nunca soube da infiltração.\n\nMarina quer que Roberto pague o conserto e quer continuar no imóvel.";
+  var PERG = "Roberto pode exigir a desocupação por falta de pagamento?";
+  var $ = function(id){ return document.getElementById(id); };
+  var caso = $("caso"), perg = $("pergunta"), btn = $("btn"), stop = $("stop"), statusEl = $("status"), body = $("res-body"), meta = $("res-meta");
+  caso.value = EXEMPLO; perg.value = PERG;
+  caso.addEventListener("input", function(){ $("ex-tag").hidden = caso.value === EXEMPLO; });
+  $("limpar").onclick = function(){ caso.value = ""; perg.value = ""; $("ex-tag").hidden = true; caso.focus(); };
+
+  var sample = null, db = null, user = null, uid = null, ctl = null;
+
+  function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9$%,./-]+/g," ").replace(/\s+/g," ").trim(); }
+  function inText(trecho, texto){ var t = norm(trecho); return t.length >= 8 && norm(texto).indexOf(t) !== -1; }
+  function esc(s){ var d = document.createElement("div"); d.textContent = String(s == null ? "" : s); return d.innerHTML; }
+  function arr(x){ return Array.isArray(x) ? x : []; }
+  var ESTADOS = {PROVADO:"Provado", MOSTRADO:"Mostrado", MENCIONADO:"Mencionado", NAO_SUSTENTADO:"Não sustentado", NAO_LOCALIZADO:"Trecho não localizado", VERIFICAR:"Conferir em fonte oficial"};
+  function stamp(e){ var k = ESTADOS[e] ? e : "MENCIONADO"; return '<span class="stamp s-'+k+'">'+ESTADOS[k]+'</span>'; }
+
+  function prompt(texto, pergunta){
+    return [
+      "Você é um analista de estudo jurídico que aplica o método TPL: só entra o que pode ser provado pelo próprio texto do caso; o que não pode ser provado é mostrado como inferência ou apenas mencionado.",
+      "REGRAS INEGOCIÁVEIS:",
+      "1. Use SOMENTE o texto do caso abaixo como fonte de fatos. Não invente fatos, documentos, datas, valores ou testemunhas.",
+      "2. Separe: fatos documentados (há documento ou trecho que os apoia no texto), alegações (o que uma parte afirma sem prova no texto) e hipóteses (possibilidades que você levanta).",
+      "3. Para cada fato documentado, copie em 'trecho' uma frase LITERAL e contígua do texto do caso (de 8 a 30 palavras) que o comprova. Se não houver trecho literal, não é fato documentado.",
+      "4. Não invente leis, artigos, súmulas ou precedentes. Se mencionar uma norma, diga se ela aparece no texto do caso (NO_TEXTO) ou vem do seu conhecimento geral (CONHECIMENTO_GERAL); se não tiver segurança da referência exata, descreva o princípio sem número.",
+      "5. Cada conclusão recebe um estado: PROVADO (apoiada diretamente por fatos documentados), MOSTRADO (decorre logicamente dos fatos, sem prova direta), MENCIONADO (depende de alegação ou de fonte externa), NAO_SUSTENTADO (o caso contradiz ou não dá base). Em 'apoio', copie o trecho literal do caso em que ela se apoia, ou deixe vazio.",
+      "6. Aponte contradições entre as versões e o que falta nos autos para concluir com segurança. Diga 'não sei' quando for o caso.",
+      "Responda SOMENTE com um objeto JSON neste formato (português do Brasil):",
+      '{"resumo":"2 a 3 frases","fatos_documentados":[{"fato":"","trecho":""}],"alegacoes":[{"parte":"","alegacao":"","tem_prova_no_texto":"sim|nao"}],"hipoteses":[""],"contradicoes":[{"entre":"","descricao":""}],"ausentes":[{"o_que_falta":"","por_que_importa":""}],"conclusoes":[{"afirmacao":"","estado":"PROVADO|MOSTRADO|MENCIONADO|NAO_SUSTENTADO","fundamento":"","apoio":""}],"normas":[{"referencia":"","origem":"NO_TEXTO|CONHECIMENTO_GERAL","para_que_serve":""}],"resposta_a_pergunta":"","limite":"o que esta análise não consegue afirmar"}',
+      "",
+      "PERGUNTA DE ESTUDO: " + (pergunta || "(nenhuma; analise o caso como um todo)"),
+      "",
+      "TEXTO DO CASO:",
+      "<<<",
+      texto,
+      ">>>"
+    ].join("\n");
+  }
+
+  // O código julga, não o modelo: confere cada citação no texto e rebaixa o que não se sustenta.
+  function verificar(r, texto){
+    var log = [], rebaixados = 0, n = 0;
+    var fatos = arr(r.fatos_documentados).map(function(f){
+      n++; var ok = inText(f.trecho, texto);
+      if(!ok){ rebaixados++; log.push("fato sem trecho literal no caso -> NAO_LOCALIZADO: " + String(f.fato||"").slice(0,80)); }
+      return {fato:f.fato, trecho:f.trecho, estado: ok ? "PROVADO" : "NAO_LOCALIZADO"};
+    });
+    var conclusoes = arr(r.conclusoes).map(function(c){
+      n++; var e = ESTADOS[c.estado] ? c.estado : "MENCIONADO";
+      var temApoio = inText(c.apoio, texto);
+      if(e === "PROVADO" && !temApoio){ rebaixados++; e = "MOSTRADO"; log.push("conclusao PROVADO sem trecho literal -> MOSTRADO: " + String(c.afirmacao||"").slice(0,80)); }
+      return {afirmacao:c.afirmacao, fundamento:c.fundamento, apoio:c.apoio, apoioOk:temApoio, estado:e};
+    });
+    var normas = arr(r.normas).map(function(nm){
+      n++; var noTexto = String(nm.origem) === "NO_TEXTO" && inText(nm.referencia, texto);
+      if(String(nm.origem) === "NO_TEXTO" && !noTexto){ rebaixados++; log.push("norma dita do caso, mas ausente no texto -> VERIFICAR: " + String(nm.referencia||"").slice(0,80)); }
+      return {referencia:nm.referencia, para:nm.para_que_serve, estado: noTexto ? "PROVADO" : "VERIFICAR"};
+    });
+    log.unshift("itens conferidos: " + n + " | rebaixados pelo código: " + rebaixados);
+    return {fatos:fatos, conclusoes:conclusoes, normas:normas, log:log, rebaixados:rebaixados, conferidos:n};
+  }
+
+  function list(items, fn){ return items.length ? '<ul class="items">' + items.map(fn).join("") + '</ul>' : '<p class="empty">Nada encontrado no caso.</p>'; }
+
+  function render(r, v, quando){
+    meta.textContent = quando ? new Date(quando).toLocaleString("pt-BR") : "";
+    var h = "";
+    h += '<div class="section"><h3>Resumo</h3><p>' + esc(r.resumo) + '</p></div>';
+    if(r.resposta_a_pergunta) h += '<div class="section"><h3>Resposta à pergunta</h3><p>' + esc(r.resposta_a_pergunta) + '</p></div>';
+    h += '<div class="section"><h3>Conclusões</h3>' + list(v.conclusoes, function(c){
+      return '<li><div class="item-head"><strong>' + esc(c.afirmacao) + '</strong>' + stamp(c.estado) + '</div><span>' + esc(c.fundamento) + '</span>' + (c.apoio ? '<span class="quote">' + (c.apoioOk ? "Trecho conferido: " : "Trecho não encontrado no caso: ") + '"' + esc(c.apoio) + '"</span>' : '') + '</li>';
+    }) + '</div>';
+    h += '<div class="section"><h3>Fatos documentados</h3>' + list(v.fatos, function(f){
+      return '<li><div class="item-head"><span>' + esc(f.fato) + '</span>' + stamp(f.estado) + '</div><span class="quote">"' + esc(f.trecho) + '"</span></li>';
+    }) + '</div>';
+    h += '<div class="section"><h3>Alegações</h3>' + list(arr(r.alegacoes), function(a){
+      var p = String(a.tem_prova_no_texto) === "sim";
+      return '<li><div class="item-head"><strong>' + esc(a.parte) + '</strong>' + stamp(p ? "MOSTRADO" : "MENCIONADO") + '</div><span>' + esc(a.alegacao) + '</span><span class="meta">' + (p ? "Há apoio no texto, a conferir nos fatos acima." : "Sem prova no texto do caso.") + '</span></li>';
+    }) + '</div>';
+    h += '<div class="section"><h3>Contradições</h3>' + list(arr(r.contradicoes), function(c){
+      return '<li><strong>' + esc(c.entre) + '</strong><span>' + esc(c.descricao) + '</span></li>';
+    }) + '</div>';
+    h += '<div class="section"><h3>O que falta para concluir com segurança</h3>' + list(arr(r.ausentes), function(a){
+      return '<li><strong>' + esc(a.o_que_falta) + '</strong><span class="meta">' + esc(a.por_que_importa) + '</span></li>';
+    }) + '</div>';
+    h += '<div class="section"><h3>Hipóteses</h3>' + list(arr(r.hipoteses), function(x){ return '<li><span>' + esc(x) + '</span></li>'; }) + '</div>';
+    h += '<div class="section"><h3>Normas citadas</h3>' + list(v.normas, function(n){
+      return '<li><div class="item-head"><strong>' + esc(n.referencia) + '</strong>' + stamp(n.estado) + '</div><span class="meta">' + esc(n.para) + '</span></li>';
+    }) + '</div>';
+    h += '<div class="section"><h3>Limite desta análise</h3><p>' + esc(r.limite) + '</p></div>';
+    h += '<div class="section"><h3>Auditoria do código</h3><pre class="audit">' + esc(v.log.join("\n")) + '</pre></div>';
+    body.innerHTML = h;
+  }
+
+  var MSG = {not_granted:"A análise precisa da sua permissão para usar o Claude. Recarregue a página e permita quando o aviso aparecer.", sampling_disabled:"O Claude não está disponível nesta conta.", rate_limited:"Muitas análises seguidas. Aguarde alguns minutos e tente de novo.", invalid_json:"A resposta veio fora do formato. Toque em Analisar caso de novo.", prompt_too_large:"O caso é longo demais. Divida em partes menores.", refused:"Este pedido não pôde ser analisado. Reformule o texto do caso.", session_expired:"Sua sessão expirou. Entre de novo no Claude.", upstream_error:"A conexão falhou. Tente de novo."};
+
+  btn.onclick = async function(){
+    var texto = caso.value.trim();
+    if(texto.length < 40){ statusEl.className = "status err"; statusEl.textContent = "Escreva o caso com pelo menos algumas frases antes de analisar."; return; }
+    if(!sample){ statusEl.className = "status err"; statusEl.textContent = "A análise só funciona com o aplicativo aberto dentro do Claude."; return; }
+    btn.disabled = true; stop.hidden = false; statusEl.className = "status";
+    body.innerHTML = '<p class="thinking"><span class="dot"></span>Lendo o caso e separando fatos de alegações. Pode levar até um minuto.</p>';
+    ctl = new AbortController();
+    try{
+      var r = await sample.json(prompt(texto, perg.value.trim()), {modelTier:"complex", signal:ctl.signal, cache:false});
+      if(!r || typeof r !== "object"){ throw {code:"invalid_json"}; }
+      var v = verificar(r, texto), agora = Date.now();
+      render(r, v, agora);
+      statusEl.textContent = v.rebaixados ? ("Análise pronta. O código rebaixou " + v.rebaixados + " item(ns) sem apoio literal no caso.") : "Análise pronta. Todas as citações foram encontradas no caso.";
+      if($("enviar").checked) await guardar({criadoEm:agora, pergunta:perg.value.trim(), caso:texto.slice(0,60000), resultado:r, verificacao:{conferidos:v.conferidos, rebaixados:v.rebaixados, log:v.log}});
+    }catch(e){
+      if(e && e.code === "cancelled"){ statusEl.textContent = "Análise interrompida."; body.innerHTML = '<p class="empty">Análise interrompida. Toque em Analisar caso para recomeçar.</p>'; }
+      else { statusEl.className = "status err"; statusEl.textContent = MSG[e && e.code] || MSG.upstream_error; body.innerHTML = '<p class="empty">Nenhuma análise foi gerada.</p>'; }
+    }finally{ btn.disabled = false; stop.hidden = true; }
+  };
+  stop.onclick = function(){ if(ctl) ctl.abort(); };
+
+  async function guardar(doc){
+    if(!db || !uid){ statusEl.textContent += " Não foi possível guardar: entre com sua conta do Claude."; return; }
+    try{ await db.collection("analises/" + uid + "/casos").add(doc); statusEl.textContent += " Guardada para revisão."; }
+    catch(e){ statusEl.textContent += " Não foi possível guardar agora (" + (e && e.code || "erro") + ")."; }
+  }
+
+  function historico(){
+    var q = db.collection("analises/" + uid + "/casos").orderBy("criadoEm","desc").limit(20);
+    q.onSnapshot(function(s){
+      var ul = $("hist"); ul.innerHTML = "";
+      $("hist-sec").hidden = s.empty;
+      s.docs.forEach(function(d){
+        var x = d.data(); var li = document.createElement("li"); var b = document.createElement("button");
+        var t = document.createElement("span"); t.textContent = x.pergunta || String(x.caso||"").slice(0,70) + "…";
+        var tm = document.createElement("time"); tm.textContent = new Date(x.criadoEm).toLocaleString("pt-BR");
+        b.append(t, tm);
+        b.onclick = function(){ caso.value = x.caso || ""; perg.value = x.pergunta || ""; $("ex-tag").hidden = true; render(x.resultado || {}, verificar(x.resultado || {}, x.caso || ""), x.criadoEm); $("resultado").scrollIntoView({behavior:"smooth"}); };
+        li.append(b); ul.append(li);
+      });
+    }, function(){ $("hist-sec").hidden = true; });
+  }
+
+  if(window.claude && window.claude.use){
+    window.claude.use("sample").then(function(s){ sample = s; if(!s){ statusEl.textContent = "Abra este aplicativo dentro do Claude para usar a análise."; } });
+    Promise.all([window.claude.use("db"), window.claude.use("user")]).then(async function(res){
+      db = res[0]; user = res[1];
+      if(db && user){ try{ uid = await user.id(); }catch(e){ uid = null; } }
+      if(db && uid){ historico(); } else { $("enviar").checked = false; $("enviar").disabled = true; }
+    });
+  } else {
+    statusEl.textContent = "Abra este aplicativo dentro do Claude para usar a análise.";
+  }
+})();
+</script>
