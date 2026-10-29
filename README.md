@@ -1,3 +1,5 @@
+Copyright (C) 2026 Carlos Eduardo Acevedo Rodrigues
+
 # Verdade Jurídica
 
 Analisador de casos jurídicos em que **o modelo de linguagem propõe e o código julga**.
@@ -40,7 +42,7 @@ Não é aconselhamento jurídico. O código confere se o que foi dito **está no
 ---
 Parte do ecossistema [TPL](https://github.com/Eduardo77117711/-tpl-).
 
-Criado por Carlos Eduardo Acevedo Rodrigues. Copyright 2026.
+Criado por Carlos Eduardo Acevedo Rodrigues. Copyright (C) 2026 Carlos Eduardo Acevedo Rodrigues.
 Licenciado sob a [GNU AGPL-3.0](LICENSE): livre para usar, estudar, modificar e redistribuir. Toda versão derivada, inclusive a oferecida como serviço pela internet, continua livre sob a mesma licença e deve manter esta atribuição e o arquivo [NOTICE](NOTICE).
 
 O app abre direto pelo link: https://eduardo77117711.github.io/verdade-juridica/
